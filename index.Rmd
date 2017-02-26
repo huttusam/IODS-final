@@ -1,5 +1,5 @@
 ---
-title: "index"
+title: "IODS final project by Sampsa Huttunen"
 output: html_document
 ---
 
