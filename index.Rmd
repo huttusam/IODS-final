@@ -14,28 +14,40 @@ output:
     code_folding: hide
 ---
 
+## Abstract
+
+An 'abstract' at the beginning of the page with a summary of your analysis  
+
+## 1 Research Question
+
+Brief description of the "research question" you are exploring, possibly including your hypothesis  
+
+## 2 Data Wrangling
+
+The data wrangling for this final assignment is in the file  [final-assignment.R](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)  
+
+## 3 Data and Variables
+
+Description of your data and its variables. Where is the data from, what does it relate to, what do the variables represent, what has been done to the data before analysis?
+
+## 4 Analysis
+
+Visually clear and interesting explorations of the variables of interest in the data, from the point of view of your research question. Include interpretations of the distributions and relationships of the variables. Use captions to draw the reader's focus on the interesting parts of your tables and graphics.  
+
+## 5 Methodology
+
+Brief description of the method you are using in your own words  
+
+## 6 Results
+
+Presentation of the results of your analysis including visualizations and summaries and a thorough interpretation of the results including a validation analysis of the method.
+
+## 7 Conclusions and Discussion
+
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Data Wrangling
 
-The data wrangling for the final assignment is in [final-assignment.R](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)  
-
-...  
- 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
