@@ -148,12 +148,21 @@ miehet <- select(miehet, one_of(keep_columns))
 summary(miehet)
 summary(naiset)
 
-keep_columns <- c("sukup", "tukivuosi","lajityyppi", "tukisumma", "esit.sukup")
+sum(miehet$tukisumma)
+sum(naiset$tukisumma)
+
+mean(miehet$tukisumma)
+mean(naiset$tukisumma)
+
+median(naiset$tukisumma)
+median(miehet$tukisumma)
+
+keep_columns <- c("sukup", "tukisumma")
 analysis_dataset <- select(kasistuet_human, one_of(keep_columns))
 View(analysis_dataset)
 
 # create a more advanced plot matrix with ggpairs()
-p <- ggpairs(analysis_dataset, mapping = aes(col = esit.sukup, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20)))
+p <- ggpairs(analysis_dataset, mapping = aes(col = sukup, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20)))
 # draw the plot
 p
 
