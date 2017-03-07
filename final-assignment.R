@@ -15,10 +15,9 @@ library(stringr)
 #Set working directory
 setwd("I:/Google Drive/Helsingin yliopisto/Intro to Open Data Science/IODS-final")
 
-# reading data from a Suomen Elokuvasäätiö CSV files to tables 'elokuvat', 'sestuet' and 'teatterit'
+# reading data from a Suomen Elokuvasäätiö CSV files to tables 'elokuvat' and 'sestuet'
 elokuvat <- read.csv2("data/Ensi-illat_ja_katsojat_2004-2014.csv", header = TRUE)
 sestuet <- read.csv2("data/SES_Tukipaeaetoekset_2008-2015.csv", header = TRUE)
-teatterit <- read.csv2("data/Elokuvateatterit_2015.csv", header = TRUE)
 
 ###############################
 # WRANGLING dataset 'sestuet' #
@@ -40,8 +39,8 @@ colnames(sestuet)[1] <- "tukityyppi"
 # Changing variable name 'Elokuvan lajityyppi' to 'lajityyppi'
 colnames(sestuet)[2] <- "lajityyppi"
 
-# Changing variable name 'Tukihak päätöspvm' to 'pvm'
-colnames(sestuet)[3] <- "pvm"
+# Changing variable name 'Tukihak päätöspvm' to 'tukipvm'
+colnames(sestuet)[3] <- "tukipvm"
 
 # Changing variable name 'Esittelijän nimi' to 'esittelija'
 colnames(sestuet)[4] <- "esittelija"
@@ -52,31 +51,34 @@ colnames(sestuet)[5] <- "hakija"
 # Changing variable name 'Tukihakemuksen kohde' to 'elokuva'
 colnames(sestuet)[6] <- "elokuva"
 
-# Changing variable name 'Tukihakemumuksen päätöseur' to 'summa'
-colnames(sestuet)[7] <- "summa"
+# Changing variable name 'Tukihakemumuksen päätöseur' to 'tukisumma'
+colnames(sestuet)[7] <- "tukisumma"
 
 # print out the column names in data
 colnames(sestuet)
 # Looking ok
 
 # Variable 'summa' is not numeric, removing the space from the string and changing type to numeric
-str_replace(sestuet$summa, pattern=" ", replace ="") %>% as.numeric() -> sestuet$summa
+str_replace(sestuet$tukisumma, pattern=" ", replace ="") %>% as.numeric() -> sestuet$tukisumma
 
-# Variable 'pvm' is not a date: changing character string to date
-sestuet$pvm <- as.Date(sestuet$pvm, "%d.%m.%Y")
+# Variable 'tukipvm' is not a date: changing character string to date
+sestuet$tukipvm <- as.Date(sestuet$tukipvm, "%d.%m.%Y")
 
-# Extracting year from 'pvm' to a new variable 'vuosi'
-sestuet$vuosi <- lubridate::year(sestuet$pvm)
+# Extracting year from 'pvm' to a new variable 'tukivuosi'
+sestuet$tukivuosi <- lubridate::year(sestuet$tukipvm)
 
-# Reordering by column index to move variable 'vuosi' before 'pvm'
-sestuet <- sestuet[c(1,2,8,3,4,5,6,7)]
+# Reordering by column index to move variable 'tukivuosi' before 'tukipvm'
+sestuet <- sestuet[c(6,7,1,2,5,4,8,3)]
 
 # Variable 'lajityyppi' has both values 'TV-sarja' and 'Tv-sarja': Renaming
 sestuet$lajityyppi <- replace(sestuet$lajityyppi, sestuet$lajityyppi=="Tv-sarja", "TV-sarja")
 
 # looking at structure of 'sestuet'
 str(sestuet)
-# looking good, type of 'summa' is now numeric, type of 'pvm' is now date, we have the year in 'vuosi', and no more value 'Tv-sarja' in 'lajityyppi'
+# looking good, type of 'tukisumma' is now numeric, type of 'pvm' is now date, we have the funding year in 'tukivuosi', and no more value 'Tv-sarja' in 'lajityyppi'
+
+# Save 'sestuet' to a csv file
+write.csv2(sestuet, file = "data/sestuet.csv")
 
 # We are only interested in funding issued for films: excluding rows where value of 'lajityyppi' is empty
 elokuvatuet <- filter(sestuet, lajityyppi != '')
@@ -85,20 +87,27 @@ elokuvatuet <- filter(sestuet, lajityyppi != '')
 View(elokuvatuet)
 # OK. Only funding for films left
 
+# Save 'elokuvatuet' to a csv file
+write.csv2(elokuvatuet, file = "data/elokuvatuet.csv")
+
 # selecting only issued script grants ('Käsikirjoitusapuraha')
 kasistuet <- filter(sestuet, tukityyppi == 'Käsikirjoitusapuraha')
+View(kasistuet)
 
 # viewing the new dataset 'kasistuet'
 View(kasistuet)
 # Lookin good: containing only script grants
 
 # excluding variable 'tukityyppi' since it's the same in all observations
-keep_columns <- c("lajityyppi", "pvm", "esittelija", "hakija", "elokuva", "summa")
+keep_columns <- c("hakija", "elokuva", "lajityyppi", "tukisumma", "tukivuosi", "esittelija", "tukipvm")
 kasistuet <- select(kasistuet, one_of(keep_columns))
 
 # print out the column names in 'kasistuet'
 colnames(kasistuet)
 # OK. No column 'tukityyppi' left
+
+# Save 'kasistuet' to a csv file
+write.csv2(kasistuet, file = "data/kasistuet.csv")
 
 ################################
 # WRANGLING dataset 'elokuvat' #
@@ -113,8 +122,8 @@ dim(elokuvat)
 # printing a summary of 'elokuvat'
 summary(elokuvat)
 
-# Changing variable name 'NIMI' to 'nimi'
-colnames(elokuvat)[1] <- "nimi"
+# Changing variable name 'NIMI' to 'elokuva'
+colnames(elokuvat)[1] <- "elokuva"
 
 # Changing variable name 'ALKPERÄISNIMI' to 'orignimi'
 colnames(elokuvat)[2] <- "orignimi"
@@ -144,11 +153,14 @@ elokuvat$enskari <- as.Date(elokuvat$enskari, "%d.%m.%Y")
 elokuvat$vuosi <- lubridate::year(elokuvat$enskari)
 
 # Reordering by column index to move variable 'vuosi' before 'enskari'
-elokuvat <- elokuvat[c(1,2,7,3,4,5,6)]
+elokuvat <- elokuvat[c(1,4,7,5,3,2,6)]
 
 # looking at structure of elokuvat
 str(elokuvat)
 # looking good, type of 'katsojat' is now numeric, type of 'enskari' is now date and premiere year is in 'vuosi'
+
+# Save 'elokuvat' to a csv file
+write.csv2(elokuvat, file = "data/elokuvat.csv")
 
 # We are only interested in films produced in Finland: excluding rows where value of 'maa' does not contain the string 'SUOMI'
 suomielokuvat <- elokuvat %>% filter(str_detect(maa, "SUOMI"))
@@ -157,13 +169,17 @@ suomielokuvat <- elokuvat %>% filter(str_detect(maa, "SUOMI"))
 View(suomielokuvat)
 # OK. Only Finnish films left
 
+# Save 'suomielokuvat' to a csv file
+write.csv2(suomielokuvat, file = "data/suomielokuvat.csv")
+
 ######################################################
 # JOINING datasets 'elokuvatuet' and 'suomielokuvat' #
 ######################################################
 
-
-
-
-
+# Determing common columns to use as identifiers
+# name_columns <- c("elokuva")
+# Join datasets mat and por and add suffixes to variables
+# tuet_elokuvat <- merge(elokuvatuet, suomielokuvat, by = name_columns, suffixes = c(".tuk",".elo"))
+# View(tuet_elokuvat)
 
 
