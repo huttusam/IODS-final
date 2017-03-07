@@ -24,11 +24,22 @@ Brief description of the "research question" you are exploring, possibly includi
 
 ## 2 Data Wrangling
 
-The data wrangling for this final assignment is in the file  [final-assignment.R](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)  
+I have created a new dataset named 'kasistuet-sukup' from the original dataset 'SES Tukipäätökset 2008-2015.csv'.
+
+##### Data Files:  
+* The original dataset (SES_Tukipaeaetoekset_2008-2015.csv) can be found [here](http://ses.fi/fileadmin/dokumentit/SES_Tukipaeaetoekset_2008-2015.csv)  
+* The new dataset (analysis_dataset.csv) can be found [here](https://github.com/huttusam/IODS-final/blob/master/data/kasistuet-sukup.csv)  
+
+##### Script:  
+* The R script used to create the new dataset (*with comments explaining the process*) is  [here](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)
 
 ## 3 Data and Variables
 
-Description of your data and its variables. Where is the data from, what does it relate to, what do the variables represent, what has been done to the data before analysis?
+Description of your data and its variables  
+Where is the data from  
+what does it relate to  
+what do the variables represent  
+what has been done to the data before analysis  
 
 ## 4 Analysis
 
@@ -36,11 +47,11 @@ Visually clear and interesting explorations of the variables of interest in the 
 
 ## 5 Methodology
 
-Brief description of the method you are using in your own words  
+Brief description of the method you are using in your own words.  
 
 ## 6 Results
 
-Presentation of the results of your analysis including visualizations and summaries and a thorough interpretation of the results including a validation analysis of the method.
+Presentation of the results of your analysis including visualizations and summaries and a thorough interpretation of the results including a validation analysis of the method.  
 
 ## 7 Conclusions and Discussion
 

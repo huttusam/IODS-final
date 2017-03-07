@@ -106,8 +106,13 @@ kasistuet <- select(kasistuet, one_of(keep_columns))
 colnames(kasistuet)
 # OK. No column 'tukityyppi' left
 
-# Save 'kasistuet' to a csv file
+# Write 'kasistuet' to a csv file
 write.csv2(kasistuet, file = "data/kasistuet.csv")
+
+# Added variable 'sukup' (gender) to 'kasistuet-sukup.csv' by hand! Possible values: M, N or O (company)
+
+# Read 'kasistuet-suku.csv' from a csv file
+kasistuet <- read.csv2(file = "data/kasistuet-sukup.csv", header = TRUE)
 
 ################################
 # WRANGLING dataset 'elokuvat' #
@@ -151,6 +156,9 @@ elokuvat$enskari <- as.Date(elokuvat$enskari, "%d.%m.%Y")
 
 # Extracting year from date to a new variable 'vuosi'
 elokuvat$vuosi <- lubridate::year(elokuvat$enskari)
+help(lubridate)
+# Extracting year from date to a new variable 'vuosi'
+elokuvat$vuosi <- as.Date.numeric(elokuvat$vuosi, "%Y")
 
 # Reordering by column index to move variable 'vuosi' before 'enskari'
 elokuvat <- elokuvat[c(1,4,7,5,3,2,6)]
@@ -172,14 +180,19 @@ View(suomielokuvat)
 # Save 'suomielokuvat' to a csv file
 write.csv2(suomielokuvat, file = "data/suomielokuvat.csv")
 
-######################################################
-# JOINING datasets 'elokuvatuet' and 'suomielokuvat' #
-######################################################
+#################################
+# ANALYSING dataset 'kasistuet' #
+#################################
 
-# Determing common columns to use as identifiers
-# name_columns <- c("elokuva")
-# Join datasets mat and por and add suffixes to variables
-# tuet_elokuvat <- merge(elokuvatuet, suomielokuvat, by = name_columns, suffixes = c(".tuk",".elo"))
-# View(tuet_elokuvat)
+naiset <- filter(kasistuet, sukup == "N")
+keep_columns <- c("lajityyppi","tukisumma","tukivuosi", "esittelija")
+naiset <- select(naiset, one_of(keep_columns))
 
+miehet <- filter(kasistuet, sukup == "M")
+keep_columns <- c("lajityyppi","tukisumma","tukivuosi", "esittelija")
+miehet <- select(miehet, one_of(keep_columns))
 
+count(miehet)
+count(naiset)
+summary(miehet[c(1,2,4)])
+summary(naiset[c(1,2,4)])
