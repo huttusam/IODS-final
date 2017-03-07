@@ -28,7 +28,7 @@ I have created a new dataset named 'kasistuet-sukup' from the original dataset '
 
 ##### Data Files:  
 * The original dataset (SES_Tukipaeaetoekset_2008-2015.csv) can be found [here](http://ses.fi/fileadmin/dokumentit/SES_Tukipaeaetoekset_2008-2015.csv)  
-* The new dataset (analysis_dataset.csv) can be found [here](https://github.com/huttusam/IODS-final/blob/master/data/kasistuet-sukup.csv)  
+* The new dataset (kasistuet-sukup.csv) can be found [here](https://github.com/huttusam/IODS-final/blob/master/data/kasistuet-sukup.csv)  
 
 ##### Script:  
 * The R script used to create the new dataset (*with comments explaining the process*) is  [here](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)

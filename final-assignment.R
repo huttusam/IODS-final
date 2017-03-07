@@ -15,9 +15,10 @@ library(stringr)
 #Set working directory
 setwd("I:/Google Drive/Helsingin yliopisto/Intro to Open Data Science/IODS-final")
 
-# reading data from a Suomen Elokuvasäätiö CSV files to tables 'elokuvat' and 'sestuet'
-elokuvat <- read.csv2("data/Ensi-illat_ja_katsojat_2004-2014.csv", header = TRUE)
+# reading data from a Suomen Elokuvasäätiö CSV file to table 'sestuet'
 sestuet <- read.csv2("data/SES_Tukipaeaetoekset_2008-2015.csv", header = TRUE)
+
+# Added variable 'sukup' (gender) to data by hand! Possible values: M, N or O (company)
 
 ###############################
 # WRANGLING dataset 'sestuet' #
@@ -67,11 +68,20 @@ sestuet$tukipvm <- as.Date(sestuet$tukipvm, "%d.%m.%Y")
 # Extracting year from 'pvm' to a new variable 'tukivuosi'
 sestuet$tukivuosi <- lubridate::year(sestuet$tukipvm)
 
+# Changing 'vuosi' from numeral to factor
+sestuet$tukivuosi <- factor(sestuet$tukivuosi)
+
 # Reordering by column index to move variable 'tukivuosi' before 'tukipvm'
 sestuet <- sestuet[c(6,7,1,2,5,4,8,3)]
 
-# Variable 'lajityyppi' has both values 'TV-sarja' and 'Tv-sarja': Renaming
+# Variable 'lajityyppi' has some incorrect values: Renaming
 sestuet$lajityyppi <- replace(sestuet$lajityyppi, sestuet$lajityyppi=="Tv-sarja", "TV-sarja")
+sestuet$lajityyppi <- replace(sestuet$lajityyppi, sestuet$lajityyppi=="Lyhyt elokuva", "Lyhytelokuva")
+sestuet$lajityyppi <- replace(sestuet$lajityyppi, sestuet$lajityyppi=="Animaatioelokuva", "Pitkä animaatioelokuva")
+sestuet$lajityyppi <- replace(sestuet$lajityyppi, sestuet$lajityyppi=="Lasten ja nuorten elokuva", "Pitkä lasten ja nuorten elokuva")
+
+# We are only interested in films produced in Finland: excluding rows where value of 'maa' does not contain the string 'SUOMI'
+# suomielokuvat <- elokuvat %>% filter(str_detect(maa, "SUOMI"))
 
 # looking at structure of 'sestuet'
 str(sestuet)
@@ -80,19 +90,18 @@ str(sestuet)
 # Save 'sestuet' to a csv file
 write.csv2(sestuet, file = "data/sestuet.csv")
 
-# We are only interested in funding issued for films: excluding rows where value of 'lajityyppi' is empty
-elokuvatuet <- filter(sestuet, lajityyppi != '')
+# We are only interested in funding issued for films: excluding rows where value of 'lajityyppi' is empty, but not NA
+elokuvatuet <- filter(sestuet, (lajityyppi != '') | (is.na(lajityyppi) == TRUE))
 
 # Checking the new dataset 'elokuvatuet'
 View(elokuvatuet)
-# OK. Only funding for films left
+# OK. Only funding for films left.
 
 # Save 'elokuvatuet' to a csv file
 write.csv2(elokuvatuet, file = "data/elokuvatuet.csv")
 
 # selecting only issued script grants ('Käsikirjoitusapuraha')
 kasistuet <- filter(sestuet, tukityyppi == 'Käsikirjoitusapuraha')
-View(kasistuet)
 
 # viewing the new dataset 'kasistuet'
 View(kasistuet)
@@ -105,18 +114,78 @@ kasistuet <- select(kasistuet, one_of(keep_columns))
 # print out the column names in 'kasistuet'
 colnames(kasistuet)
 # OK. No column 'tukityyppi' left
-
+summary(kasistuet)
 # Write 'kasistuet' to a csv file
 write.csv2(kasistuet, file = "data/kasistuet.csv")
 
 # Added variable 'sukup' (gender) to 'kasistuet-sukup.csv' by hand! Possible values: M, N or O (company)
 
-# Read 'kasistuet-suku.csv' from a csv file
+# Read 'kasistuet-sukup.csv' from a csv file
 kasistuet <- read.csv2(file = "data/kasistuet-sukup.csv", header = TRUE)
+
+# Vuosi has changed from factro to numeral!
+str(kasistuet)
+
+# Changing 'vuosi' from numeral to factor (again)
+kasistuet$tukivuosi <- factor(kasistuet$tukivuosi)
+
+#################################
+# ANALYSING dataset 'kasistuet' #
+#################################
+
+# Excluding observations where applicant was a company (sukup=O)
+kasistuet_human <- filter(kasistuet, sukup != "O")
+
+View(kasistuet_human)
+kasistuet_human$lajityyppi
+
+# building a datase where only women's script grants
+naiset <- filter(kasistuet_human, sukup == "N")
+keep_columns <- c("lajityyppi","tukisumma","tukivuosi", "esittelija")
+naiset <- select(naiset, one_of(keep_columns))
+
+# building a datase where only men's script grants
+miehet <- filter(kasistuet, sukup == "M")
+keep_columns <- c("lajityyppi","tukisumma","tukivuosi", "esittelija")
+miehet <- select(miehet, one_of(keep_columns))
+
+# Printing summary of naiset and miehet
+summary(miehet)
+summary(naiset)
+
+keep_columns <- c("sukup", "tukivuosi","tukisumma")
+analysis_dataset <- select(kasistuet_human, one_of(keep_columns))
+View(analysis_dataset)
+
+# create a more advanced plot matrix with ggpairs()
+p <- ggpairs(analysis_dataset, mapping = aes(col = sukup, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20)))
+# draw the plot
+p
+
 
 ################################
 # WRANGLING dataset 'elokuvat' #
 ################################
+
+# Sampsa Huttunen, 5.3.2017, Wrangling Data & Analyzing for IODS course's Final Assignment
+
+# Access the dplyr library
+library(dplyr)
+
+# Access the gglot2 library
+library(ggplot2)
+
+# access the GGally
+library(GGally)
+
+# access the stringr package
+library(stringr)
+
+#Set working directory
+setwd("I:/Google Drive/Helsingin yliopisto/Intro to Open Data Science/IODS-final")
+
+# reading data from a Suomen Elokuvasäätiö CSV file to table 'elokuvat'
+elokuvat <- read.csv2("data/Ensi-illat_ja_katsojat_2004-2014.csv", header = TRUE)
 
 # checking structure of 'elokuvat': a dataset containing information of the Finnish movie premieres and audiences between 2004-2014
 str(elokuvat)
@@ -156,9 +225,9 @@ elokuvat$enskari <- as.Date(elokuvat$enskari, "%d.%m.%Y")
 
 # Extracting year from date to a new variable 'vuosi'
 elokuvat$vuosi <- lubridate::year(elokuvat$enskari)
-help(lubridate)
-# Extracting year from date to a new variable 'vuosi'
-elokuvat$vuosi <- as.Date.numeric(elokuvat$vuosi, "%Y")
+
+# Changing 'vuosi' from numeral to factor
+elokuvat$vuosi <- factor(elokuvat$vuosi)
 
 # Reordering by column index to move variable 'vuosi' before 'enskari'
 elokuvat <- elokuvat[c(1,4,7,5,3,2,6)]
@@ -180,19 +249,6 @@ View(suomielokuvat)
 # Save 'suomielokuvat' to a csv file
 write.csv2(suomielokuvat, file = "data/suomielokuvat.csv")
 
-#################################
-# ANALYSING dataset 'kasistuet' #
-#################################
 
-naiset <- filter(kasistuet, sukup == "N")
-keep_columns <- c("lajityyppi","tukisumma","tukivuosi", "esittelija")
-naiset <- select(naiset, one_of(keep_columns))
 
-miehet <- filter(kasistuet, sukup == "M")
-keep_columns <- c("lajityyppi","tukisumma","tukivuosi", "esittelija")
-miehet <- select(miehet, one_of(keep_columns))
 
-count(miehet)
-count(naiset)
-summary(miehet[c(1,2,4)])
-summary(naiset[c(1,2,4)])
