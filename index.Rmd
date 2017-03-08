@@ -105,10 +105,11 @@ As the above summary indicates, 52% of the respondents in the data are female an
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 # printing a graphical summarization of affairs
-gather(affairs) %>% ggplot(aes(value, fill = sex, alpha=0.3)) + facet_wrap("key", scales = "free") + geom_bar() + ggtitle("Barplot of all variables") +
+gather(affairs) %>% ggplot(aes(value, alpha=0.3)) + facet_wrap("key", scales = "free") + geom_bar() + ggtitle("Barplots of all variables") +
   theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'),legend.position="none")
 
 ```
+
 When we look at the bar visualization of the data above, we can see that most participants have had at least some years of college education, are in administrative or managerial positions, are happy with their marriage, are somewhat religious, and have not had any extra-marital relationships. Who, then, has these relationships?  
 
 
@@ -128,7 +129,14 @@ p1 <- ggplot(affairs, aes(x = rate, y = nbaffairs, col=sex)) +
   theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'),
         axis.title= element_text(hjust = 0.5,size=12))
 p1
+
+# fit a linear model
+my_model1 <- lm(nbaffairs ~ rate, data = affairs)
+
+# print out a summary of the model
+summary(my_model1)
 ```
+
 As we can see from the above linear regression plot, there is a clear negative correlation between the number of extra-marital affairs and the self-rated happiness of one's marriage. Although the data shows only a correlation between these two factors, the causality behind this correlation might run from experienced unhappiness to cheating. While this explanation feels plausible, further study is needed to confirm the direction of the causality.  
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
@@ -139,21 +147,34 @@ p2 <-ggplot(affairs, aes(x = ym, y = nbaffairs, col=sex)) +
   theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'),
         axis.title= element_text(hjust = 0.5,size=12))
 p2
+
+# fit a linear model
+my_model2 <- lm(nbaffairs ~ ym, data = affairs)
+
+# print out a summary of the model
+summary(my_model2)
+
 ```
+
 The number of years in marriage also seems to contribute to the likelihood of extra-marital relations. The bitter truth behind this might be that, over time, people get bored of their spouses and begin to seek some additional excitement to their (sex) life.  
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 # Plotting nbaffairs vs religious
 p3 <-ggplot(affairs, aes(x = religious, y = nbaffairs, col=sex)) +
   geom_point() + geom_smooth(method="lm") + 
-  ggtitle("Religiousness versus Cheating")+
+  ggtitle("Religiousness vs Cheating") +
   theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'),
         axis.title= element_text(hjust = 0.5,size=12))
 p3
+# fit a linear model
+my_model3 <- lm(nbaffairs ~ religious, data = affairs)
 
+# print out a summary of the model
+summary(my_model3)
 ``` 
 
-Religiousness, on the other hand, seems to decrease the likelihood of extra-marital affairs. The type of the religion, the participant was affiliated with, was not in the data, but most of the world's religions condemn adultery. This, in turn, might decrease the religious person's willingness to commit adultery.     
+Religiousness, on the other hand, seems to decrease the likelihood of extra-marital affairs. The type of the religion, the participant was affiliated with, was not in the data, but most of the world's religions condemn adultery. This, in turn, might decrease the religious person's willingness to practice extra-marital affairs.     
+
 
 ## References
 
