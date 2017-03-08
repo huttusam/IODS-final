@@ -83,7 +83,7 @@ The original dataset (Fair.csv) was downloaded from [https://vincentarelbundock.
 The R script used to create the new dataset is at   [https://github.com/huttusam/IODS-final/blob/master/final-assignment.R](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)  
 and the 'affairs' dataset used in this assignment is at [https://github.com/huttusam/IODS-final/blob/master/data/affairs.csv](https://github.com/huttusam/IODS-final/blob/master/data/affairs.csv)
 
-## 3 Analysis and Results
+## 3 Analysis, Results, and Conclusions
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 # Access libraries
@@ -178,6 +178,9 @@ summary(my_model3)
 
 Religiousness, on the other hand, seems to decrease the likelihood of extra-marital affairs. The type of the religion, the participant was affiliated with, was not in the data, but most of the world's religions condemn adultery. This, in turn, might decrease the religious person's willingness to practice extra-marital affairs.     
 
+## 4 Discussion
+
+Since the dataset used in this assignment was somewhat small and the data obtained a long time ago and in an unorthodox way, the results and conlcusions drawn from it can only be tentative. Further study is needed to address more closely and accurately the phenomenon of extra-marital affairs and the individual and societal reasons behind it.  
 
 ## References
 
