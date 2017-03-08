@@ -22,11 +22,11 @@ This final assignment analyzes the relation between a tedency to have extra-mari
 
 I am using a dataset originally used for Fair's 1977 study of extramarital affairs to see what factors correlated with a tendency to have extramarital affairs in the end of the 1960 in the United States. 
 
-The R script used to create the new dataset (*with comments explaining the process*) is  [here](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)
+The R script used to create the new dataset is at   [https://github.com/huttusam/IODS-final/blob/master/final-assignment.R](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)
 
 ## 2 Data and Variables
 
-The dataset discussed here is a cross-section with 601 observations that are answers of individuals to sex-related questions. The dataset is a sample of a two surveys conducted in the United States: A survey by Psychology Today in 1969 and a survey by Redbook in 1974. Only employed people and people who were married and married for the first time were included in this dataset.
+The dataset discussed here is a data of 601 answers of individuals to sex-related questions. The dataset is a sample of a two surveys conducted in the United States: A survey by Psychology Today in 1969 and a survey by Redbook in 1974. Only employed people and people who were married and married for the first time were included in this dataset.
 
 The original dataset (Fair.csv) was downloaded from [https://vincentarelbundock.github.io/Rdatasets/csv/Ecdat/Fair.csv](https://vincentarelbundock.github.io/Rdatasets/csv/Ecdat/Fair.csv)  
 
@@ -53,19 +53,25 @@ The original dataset (Fair.csv) was downloaded from [https://vincentarelbundock.
   + 2 - Machine operators and semiskilled employees
   + 1 - Unskilled employees.
 * rate - self rating of marriage from 1 (very unhappy) to 5 (very happy)
-* nbaffairs - number of affairs in the past year.
+* nbaffairs - number of affairs in the past year
+  + 0 - none
+  + 1 - Once  
+  + 2 - Twice
+  + 3 - 3 times
+  + 7 - 4 to 10 times
+  + 12 - Monthly
 
 The dataset was originally assembled and used in his research by Fair (1977).  
 
 ##### Data Wrangling
 
-The original dataset 'Fair.csv' had an extra column with row index numbers. That column was omitted. The sparator between values was also changed to ";" to make the CSV data comply and open neatly with the European Excel versions. The wrangled dataset was then written to a file 'affairs.csv' to be used in the analysis.  
+The original dataset 'Fair.csv' had an extra column with row index numbers. That column was omitted.  
+
+The sparator between values was also changed to ";" to make the CSV data comply and open neatly with the European Excel versions. The wrangled dataset was then written to a file 'affairs.csv' to be used in the analysis.  
 
 ## 4 Analysis
 
 Visually clear and interesting explorations of the variables of interest in the data, from the point of view of your research question. Include interpretations of the distributions and relationships of the variables. Use captions to draw the reader's focus on the interesting parts of your tables and graphics.  
-
-First, let's look at the a summary of the data:
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 # Access libraries
@@ -83,56 +89,79 @@ summary(affairs)
 # n= 601; 315 females, 286 males; mean age: 32.48 years
 ```
 
-As we can see from the summary, about 52% of the respondents are femail and 48% male. The mean age of the participants is 53,5 years and about 71% of them have children. The average duration of marriage among the participants has been about 8 years.  
+As we can see from the above summary, about 52% of the respondents are femail and 48% male. The mean age of the participants is 53,5 years and about 71% of them have children. The average duration of marriage among the participants has been about 8 years.  
 
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 # printing a graphical summarization of affairs
-gather(affairs) %>% ggplot(aes(value,fill="#99999",alpha=0.3)) + facet_wrap("key", scales = "free") + geom_bar() + ggtitle("Barsplot of all variables") +
-  theme(plot.title = element_text(hjust = 0.5,size=12,face='bold'),legend.position="none")
+gather(affairs) %>% ggplot(aes(value, fill = sex, alpha=0.3)) + facet_wrap("key", scales = "free") + geom_bar() + ggtitle("Barplot of all variables") +
+  theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'),legend.position="none")
+
 ```
 
-When we look at a bar visualization of the data, we can see that most participants have had at least some years of college education, have had no extra-marital relationships, are in administrative or managerial positions, are happy with their marriage, and are somewhat religious.  
+When we look at the bar visualization of the data above, we can see that most participants have had at least some years of college education, have had no extra-marital relationships, are in administrative or managerial positions, are happy with their marriage, and are somewhat religious.  
+
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 ggpairs(affairs, mapping = aes(col = sex, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20))) +
   ggtitle("All variables against each other") +
-  theme(plot.title = element_text(hjust = 0.5,size=12,face='bold'))
+  theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'))
 
 ```
 
-When we cross-tabulate the variables, we can see a negative correlation between the number of extra-marital affairs and how people rate their marriage. There's also some correlation between extra-marital affairs and years of marriage and negative correlation with religiousness. Next, we look at the relation of these correlating pairs more closely.
+As can see from the above summary graph, there is a negative correlation between the number of extra-marital affairs and how people rate their marriage. There's also some correlation between extra-marital affairs and years of marriage and negative correlation with religiousness. Let's look at these pairs more closely:  
 
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 # Plotting nbaffairs vs rate
-p1 <-ggplot(affairs, aes(x = rate, y = nbaffairs, col=sex)) +
+p1 <- ggplot(affairs, aes(x = rate, y = nbaffairs, col=sex)) +
   geom_point() + geom_smooth(method="lm") + 
-  ggtitle("Experienced Happiness in Marriage versus Number of Extra-marital Affairs")+
+  ggtitle("Happiness in Marriage vs Cheating")+
   theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'),
         axis.title= element_text(hjust = 0.5,size=12))
 p1
 ```
+As we can see from the above plot that shows a simple linear regression, the likelihopod of an extra-marital relationship increases, when the experienced happiness in marriage decreases.
+
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 # Plotting nbaffairs vs ym
 p1 <-ggplot(affairs, aes(x = ym, y = nbaffairs, col=sex)) +
   geom_point() + geom_smooth(method="lm") + 
-  ggtitle("Number of Years Married versus Number of Extra-marital Affairs")+
+  ggtitle("Number of Years Married vs Cheating")+
   theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'),
         axis.title= element_text(hjust = 0.5,size=12))
 p1
 ```
+The number of years in marriage also seems to contribute to the likelihood of extra-marital relations.
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 # Plotting nbaffairs vs religious
 p1 <-ggplot(affairs, aes(x = religious, y = nbaffairs, col=sex)) +
   geom_point() + geom_smooth(method="lm") + 
-  ggtitle("Religiousness versus Number of Extra-marital Affairs")+
+  ggtitle("Religiousness versus Cheating")+
   theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'),
         axis.title= element_text(hjust = 0.5,size=12))
 p1
 ```
+As the plot suggests, religiousness, on the other hand, seems to decrease the likelihood of extra-marital affairs.  
+
+Next, let's fit a multiple regression model on the data to see, if a certain combinations of eplanatory variables might explain the tendency for extra-marital relations better than just one variable. For analysis purposes, we have created a new logical variable 'high_cheat', which is TRUE, if number of extra-marital realtions per year is bigger than one, FALSE otherwise.  
+
+# define a new logical column 'high_cheat'
+affairs <- mutate(affairs, high_cheat = nbaffairs > 1)  
+
+
+
+```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
+# create a regression model with multiple explanatory variables
+my_model <- lm(nbaffairs ~ rate + religious, data = affairs)
+
+# print out a summary of the model
+summary(my_model)
+```
+
+
 
 ## 5 Methodology
 
