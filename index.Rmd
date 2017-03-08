@@ -178,7 +178,7 @@ my_model3 <- lm(nbaffairs ~ religious, data = affairs)
 summary(my_model3)
 ``` 
 
-Religiousness, on the other hand, seems to decrease the likelihood of extra-marital affairs. The type of the religion, the participant was affiliated with, was not in the data, but most of the world's religions condemn adultery. This, in turn, might decrease the religious person's willingness to practice extra-marital affairs.     
+Religiousness, on the other hand, seems to decrease the likelihood of extra-marital affairs. The type of the religion, the participant was affiliated with, was not in the data, but most of the world's religions condemn adultery. This, in turn, might decrease a religious person's willingness to have extra-marital affairs.     
 
 ## 4 Discussion
 
