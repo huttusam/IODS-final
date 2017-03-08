@@ -93,7 +93,7 @@ library(GGally)
 library(stringr)
 library(tidyverse)
 
-# reading data from the wrangles CSV file to table 'affairs'
+# reading data from the wrangled CSV file to table 'affairs'
 affairs <- read.table("data/affairs.csv", sep = ";", header = TRUE)
 
 # printing a summary of affairs

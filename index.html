@@ -231,27 +231,10 @@ library(GGally)
 library(stringr)
 library(tidyverse)
 
-# reading data from the wrangles CSV file to table 'affairs'
+# reading data from the wrangled CSV file to table 'affairs'
 affairs &lt;- read.table(&quot;data/affairs.csv&quot;, sep = &quot;;&quot;, header = TRUE)
 
-# printing column names of affairs
-colnames(affairs)</code></pre>
-<pre><code>## [1] &quot;sex&quot;        &quot;age&quot;        &quot;ym&quot;         &quot;child&quot;      &quot;religious&quot; 
-## [6] &quot;education&quot;  &quot;occupation&quot; &quot;rate&quot;       &quot;nbaffairs&quot;</code></pre>
-<pre class="r"><code># printing structure of affairs
-str(affairs)</code></pre>
-<pre><code>## 'data.frame':    601 obs. of  9 variables:
-##  $ sex       : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 1 1 2 2 1 1 2 1 2 ...
-##  $ age       : num  37 27 32 57 22 32 22 57 32 22 ...
-##  $ ym        : num  10 4 15 15 0.75 1.5 0.75 15 15 1.5 ...
-##  $ child     : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 2 2 1 1 1 2 2 1 ...
-##  $ religious : int  3 4 1 5 2 2 2 2 4 4 ...
-##  $ education : int  18 14 12 18 17 17 12 14 16 14 ...
-##  $ occupation: int  7 6 1 6 6 5 1 4 1 4 ...
-##  $ rate      : int  4 4 4 5 3 5 3 4 2 5 ...
-##  $ nbaffairs : int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
-<pre class="r"><code># n= 601, 10 variables</code></pre>
-<pre class="r"><code># printing a summary of affairs
+# printing a summary of affairs
 summary(affairs)</code></pre>
 <pre><code>##      sex           age              ym         child       religious    
 ##  female:315   Min.   :17.50   Min.   : 0.125   no :171   Min.   :1.000  
