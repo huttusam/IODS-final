@@ -80,7 +80,7 @@ The separator between values was also changed to ";" to make the CSV data comply
 ### 2.3 The Files
 
 The original dataset (Fair.csv) was downloaded from [https://vincentarelbundock.github.io/Rdatasets/csv/Ecdat/Fair.csv](https://vincentarelbundock.github.io/Rdatasets/csv/Ecdat/Fair.csv)  
-The R script used to create the new dataset is at   [https://github.com/huttusam/IODS-final/blob/master/final-assignment.R](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)
+The R script used to create the new dataset is at   [https://github.com/huttusam/IODS-final/blob/master/final-assignment.R](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)  
 and the 'affairs' dataset used in this assignment is at [https://github.com/huttusam/IODS-final/blob/master/data/affairs.csv](https://github.com/huttusam/IODS-final/blob/master/data/affairs.csv)
 
 ## 3 Analysis and Results
@@ -111,7 +111,8 @@ gather(affairs) %>% ggplot(aes(value, alpha=0.3)) + facet_wrap("key", scales = "
 
 ```
 
-When we look at the bar visualization of the data above, we can see that most participants have had at least some years of college education, are in administrative or managerial positions, are happy with their marriage, are somewhat religious, and have not had any extra-marital relationships. Who, then, has these relationships?  
+When we look at the bar visualization of the data above, we can see that most participants have had at least some years of college education, are in administrative or managerial positions, are happy with their marriage, are somewhat religious, and have not had any extra-marital relationships.  
+Who, then, has these relationships?  
 
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
@@ -120,7 +121,7 @@ p
 
 ```
 
-The above summary shows that women (in red) and men (in blue) don't differ very much in the number of extra-marital relations. The summary also indicates some interesting correlations with extra-marital affairs. There is a negative correlation between cheating and how people rate their marriage, some correlation between cheating and years in marriage, as well as a slight negative correlation between cheating and religiousness. Let's look at these pairs more closely:  
+The above summary shows that women (in red) and men (in blue) don't differ very much in the number of extra-marital relations (see lower right corner of graph). The summary also indicates some interesting correlations with extra-marital affairs. There is a negative correlation between cheating and how people rate their marriage (-0.28), some correlation between cheating and years in marriage (0.187), as well as a slight negative correlation between cheating and religiousness (-0.145). Let's look at these pairs more closely:  
 
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
