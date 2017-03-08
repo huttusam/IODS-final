@@ -118,7 +118,7 @@ ggpairs(affairs, mapping = aes(col = sex, alpha = 0.3), lower = list(combo = wra
 
 ```
 
-The above summary shows that men and women don't differ very much in the number of extra-marital relations. The summary also indicates some interesting correlations with extra-marital affairs. There is a negative correlation between cheating and how people rate their marriage, some correlation between cheating and years in marriage, as well as a slight negative correlation between cheating and religiousness. Let's look at these pairs more closely:  
+The above summary shows that women (in red) and men (in blue) don't differ very much in the number of extra-marital relations. The summary also indicates some interesting correlations with extra-marital affairs. There is a negative correlation between cheating and how people rate their marriage, some correlation between cheating and years in marriage, as well as a slight negative correlation between cheating and religiousness. Let's look at these pairs more closely:  
 
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
