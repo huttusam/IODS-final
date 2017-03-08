@@ -14,6 +14,10 @@ output:
     code_folding: hide
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 ## Abstract
 
 This final assignment analyzes the relation between extra-marital affairs (i.e. "cheating") with some other variables related to personal and marital life in the United States at the end of the 1970's. According to my results, the factor correlating most with the likelihood to have an extra-marital affair seems to be (maybe unsurprisingly) one's happiness to his/her marriage.  
@@ -146,10 +150,13 @@ p3 <-ggplot(affairs, aes(x = religious, y = nbaffairs, col=sex)) +
   theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'),
         axis.title= element_text(hjust = 0.5,size=12))
 p3
-```
+
+``` 
+
 Religiousness, on the other hand, seems to decrease the likelihood of extra-marital affairs. The type of the religion, the participant was affiliated with, was not in the data, but most of the world's religions condemn adultery. This, in turn, might decrease the religious person's willingness to commit adultery.     
 
 ## References
+
 Fair, R. (1977) "A note on the computation of the tobit estimator", Econometrica, 45, 1723-1727. [http://fairmodel.econ.yale.edu/rayfair/pdf/1978A200.PDF](http://fairmodel.econ.yale.edu/rayfair/pdf/1978A200.PDF)  
 
 
