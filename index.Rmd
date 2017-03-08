@@ -20,7 +20,7 @@ An 'abstract' at the beginning of the page with a summary of your analysis
 
 ## 1 Research Question
 
-Brief description of the "research question" you are exploring, possibly including your hypothesis  
+I am using a dataset originally used for Fair's 1977 study of extramarital affairs to see what factors correlated with a tendency to have extramarital affairs in the end of the 1960 in the United States. 
 
 ## 2 Data Wrangling
 
@@ -28,34 +28,47 @@ I have created a new dataset named 'affairs' from the original dataset 'Fair.csv
 
 ##### Data Files:  
 * The original dataset (Fair.csv) can be found [here](https://vincentarelbundock.github.io/Rdatasets/csv/Ecdat/Fair.csv)  
-* The new dataset (kasistuet-sukup.csv) can be found [here](https://github.com/huttusam/IODS-final/blob/master/data/Fair.csv)  
 
 ##### Script:  
 * The R script used to create the new dataset (*with comments explaining the process*) is  [here](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)
 
 ## 3 Data and Variables
 
-Extramarital Affairs Data  
+The dataset 'affairs' is a cross-section with 601 observations that are answers of individuals to sex-related questions. The dataset is a sample of a two surveys conducted in the United States: A survey by Psychology Today in 1969 and a survey by Redbook in 1974. Only employed people and people who were married and married for the first time were included in this dataset.
 
-###Description:  
-* A cross-section
-* Number of observations: 601  
-* Observation: individuals  
-* Country: United States.  
-
-### A dataframe containing:  
-* sex - a factor with levels (male,female)  
+##### The dataset contains the following variables:  
+* sex - sex (male,female)  
 * age - age  
 * ym - number of years married
-* child - children - a factor 
-* religious - how religious, from 1 (anti) to 5 (very)
-* education - education
-* occupation - occupation, from 1 to 7, according to hollingshead classification (reverse numbering)
-* rate - self rating of mariage, from 1 (very unhappy) to 5 (very happy)
-* nbaffairs - number of affairs in past year
+* child - children (no/yes) 
+* religious - how religious from 1 (anti) to 5 (very)
+* education - education:
+  + 9.0 - Grade school  
+  + 12.0 - High school
+  + 14.0 - Some college
+  + 16.0 - College graduate
+  + 17.0 - Some graduate school
+  + 18.0 - Master's degree
+  + 20.0 - Ph.D., M.D., or other advanced degree.
+* occupation - occupation, according to Hollingshead Index of Social Positions (ISP) Occupational Scale (with reversed numbering):
+  + 7 - Higher executives of large concerns, proprietors, and major professionals  
+  + 6 - Business managers, proprietors of medium-sized businesses, and lesser professionals  
+  + 5 - Administrative personnel, owners of small businesses, and minor professionals
+  + 4 - Clerical and sales workers, technicians, and owners of little businesses
+  + 3 - Skilled manual employees
+  + 2 - Machine operators and semiskilled employees
+  + 1 - Unskilled employees.
 
-###Source
-* Fair, R. (1977) "A note on the computation of the tobit estimator", Econometrica, 45, 1723-1727. [http://fairmodel.econ.yale.edu/rayfair/pdf/1978A200.PDF](http://fairmodel.econ.yale.edu/rayfair/pdf/1978A200.PDF)
+* rate - self rating of marriage from 1 (very unhappy) to 5 (very happy)
+* nbaffairs - number of affairs in the past year.
+
+##### Data Source
+The original study where the dataset was used is  
+Fair, R. (1977) "A note on the computation of the tobit estimator", Econometrica, 45, 1723-1727.  
+[http://fairmodel.econ.yale.edu/rayfair/pdf/1978A200.PDF](http://fairmodel.econ.yale.edu/rayfair/pdf/1978A200.PDF)  
+and the original dataset can be found at   [https://vincentarelbundock.github.io/Rdatasets/csv/Ecdat/Fair.csv](https://vincentarelbundock.github.io/Rdatasets/csv/Ecdat/Fair.csv)  
+
+##### Summary of the Data
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 # Access the dplyr library
@@ -77,12 +90,6 @@ affairs <- read.csv("data/Fair.csv", header = TRUE)
 summary(affairs)
 # n= 601; 315 females, 286 males; mean age: 32.48 years
 ```
-
-Description of your data and its variables  
-Where is the data from  
-what does it relate to  
-what do the variables represent  
-what has been done to the data before analysis  
 
 ## 4 Analysis
 
