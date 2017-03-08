@@ -15,78 +15,80 @@ library(stringr)
 #Set working directory
 setwd("I:/Google Drive/Helsingin yliopisto/Intro to Open Data Science/IODS-final")
 
-# reading data from a Suomen Elokuvasäätiö CSV file to table 'sestuet'
-sestuet <- read.csv2("data/SES_Tukipaeaetoekset_2008-2015.csv", header = TRUE)
+# reading data from a CSV file to table 'affairs'
+affairs <- read.csv("data/Fair.csv", header = TRUE)
 
 ###############################
-# WRANGLING dataset 'sestuet' #
+# WRANGLING dataset 'affairs' #
 ###############################
 
-# looking at structure of sestuet
-str(sestuet)
-# A dataset containing information of the Finnish Film Foundation funds/grants between 2008-2015
+# looking at structure of affairs
+str(affairs)
+# A dataset containing answers to an extramarital affairs study
 
-# looking at dimensions of sestuet
-dim(sestuet)
+# looking at dimensions of affairs
+dim(affairs)
+# 601 observations and 10 variables
 
-# printing a summary of sestuet
-summary(sestuet)
+# printing a summary of affairs
+summary(affairs)
+# n= 601; 315 females, 286 males; mean age: 32.48 years
 
 # Changing variable name 'Tukityypin nimi' to 'tukityyppi'
-colnames(sestuet)[1] <- "tukityyppi"
+colnames(affairs)[1] <- "tukityyppi"
 
 # Changing variable name 'Elokuvan lajityyppi' to 'lajityyppi'
-colnames(sestuet)[2] <- "lajityyppi"
+colnames(affairs)[2] <- "lajityyppi"
 
 # Changing variable name 'Tukihak päätöspvm' to 'tukipvm'
-colnames(sestuet)[3] <- "tukipvm"
+colnames(affairs)[3] <- "tukipvm"
 
 # Changing variable name 'Esittelijän nimi' to 'esittelija'
-colnames(sestuet)[4] <- "esittelija"
+colnames(affairs)[4] <- "esittelija"
 
 # Changing variable name 'tuenhakijan nimi' to 'hakija'
-colnames(sestuet)[5] <- "hakija"
+colnames(affairs)[5] <- "hakija"
 
 # Changing variable name 'Tukihakemuksen kohde' to 'elokuva'
-colnames(sestuet)[6] <- "elokuva"
+colnames(affairs)[6] <- "elokuva"
 
 # Changing variable name 'Tukihakemumuksen päätöseur' to 'tukisumma'
-colnames(sestuet)[7] <- "tukisumma"
+colnames(affairs)[7] <- "tukisumma"
 
 # print out the column names in data
-colnames(sestuet)
+colnames(affairs)
 # Looking ok
 
 # Variable 'summa' is not numeric, removing the space from the string and changing type to numeric
-str_replace(sestuet$tukisumma, pattern=" ", replace ="") %>% as.numeric() -> sestuet$tukisumma
+str_replace(affairs$tukisumma, pattern=" ", replace ="") %>% as.numeric() -> affairs$tukisumma
 
 # Variable 'tukipvm' is not a date: changing character string to date
-sestuet$tukipvm <- as.Date(sestuet$tukipvm, "%d.%m.%Y")
+affairs$tukipvm <- as.Date(affairs$tukipvm, "%d.%m.%Y")
 
 # Extracting year from 'pvm' to a new variable 'tukivuosi'
-sestuet$tukivuosi <- lubridate::year(sestuet$tukipvm)
+affairs$tukivuosi <- lubridate::year(affairs$tukipvm)
 
 # Changing 'vuosi' from numeral to factor
-sestuet$tukivuosi <- factor(sestuet$tukivuosi)
+affairs$tukivuosi <- factor(affairs$tukivuosi)
 
 # Reordering by column index to move variable 'tukivuosi' before 'tukipvm'
-sestuet <- sestuet[c(6,7,1,2,5,4,8,3)]
+affairs <- affairs[c(6,7,1,2,5,4,8,3)]
 
 # Variable 'lajityyppi' has some incorrect values: Renaming
-sestuet$lajityyppi <- replace(sestuet$lajityyppi, sestuet$lajityyppi=="Tv-sarja", "TV-sarja")
-sestuet$lajityyppi <- replace(sestuet$lajityyppi, sestuet$lajityyppi=="Lyhyt elokuva", "Lyhytelokuva")
-sestuet$lajityyppi <- replace(sestuet$lajityyppi, sestuet$lajityyppi=="Animaatioelokuva", "Pitkä animaatioelokuva")
-sestuet$lajityyppi <- replace(sestuet$lajityyppi, sestuet$lajityyppi=="Lasten ja nuorten elokuva", "Pitkä lasten ja nuorten elokuva")
+affairs$lajityyppi <- replace(affairs$lajityyppi, affairs$lajityyppi=="Tv-sarja", "TV-sarja")
+affairs$lajityyppi <- replace(affairs$lajityyppi, affairs$lajityyppi=="Lyhyt elokuva", "Lyhytelokuva")
+affairs$lajityyppi <- replace(affairs$lajityyppi, affairs$lajityyppi=="Animaatioelokuva", "Pitkä animaatioelokuva")
+affairs$lajityyppi <- replace(affairs$lajityyppi, affairs$lajityyppi=="Lasten ja nuorten elokuva", "Pitkä lasten ja nuorten elokuva")
 
-# looking at structure of 'sestuet'
-str(sestuet)
+# looking at structure of 'affairs'
+str(affairs)
 # looking good, type of 'tukisumma' is now numeric, type of 'pvm' is now date, we have the funding year in 'tukivuosi', and no more value 'Tv-sarja' in 'lajityyppi'
 
-# Save 'sestuet' to a csv file
-write.csv2(sestuet, file = "data/sestuet.csv")
+# Save 'affairs' to a csv file
+write.csv2(affairs, file = "data/affairs.csv")
 
 # We are only interested in funding issued for films: excluding rows where value of 'lajityyppi' is empty, but not NA
-elokuvatuet <- filter(sestuet, (lajityyppi != '') | (is.na(lajityyppi) == TRUE))
+elokuvatuet <- filter(affairs, (lajityyppi != '') | (is.na(lajityyppi) == TRUE))
 
 # Checking the new dataset 'elokuvatuet'
 View(elokuvatuet)
@@ -96,7 +98,7 @@ View(elokuvatuet)
 write.csv2(elokuvatuet, file = "data/elokuvatuet.csv")
 
 # selecting only issued script grants ('Käsikirjoitusapuraha')
-kasistuet <- filter(sestuet, tukityyppi == 'Käsikirjoitusapuraha')
+kasistuet <- filter(affairs, tukityyppi == 'Käsikirjoitusapuraha')
 
 # viewing the new dataset 'kasistuet'
 View(kasistuet)

@@ -24,16 +24,59 @@ Brief description of the "research question" you are exploring, possibly includi
 
 ## 2 Data Wrangling
 
-I have created a new dataset named 'kasistuet-sukup' from the original dataset 'SES Tukipäätökset 2008-2015.csv'.
+I have created a new dataset named 'affairs' from the original dataset 'Fair.csv'.
 
 ##### Data Files:  
-* The original dataset (SES_Tukipaeaetoekset_2008-2015.csv) can be found [here](http://ses.fi/fileadmin/dokumentit/SES_Tukipaeaetoekset_2008-2015.csv)  
-* The new dataset (kasistuet-sukup.csv) can be found [here](https://github.com/huttusam/IODS-final/blob/master/data/kasistuet-sukup.csv)  
+* The original dataset (Fair.csv) can be found [here](https://vincentarelbundock.github.io/Rdatasets/csv/Ecdat/Fair.csv)  
+* The new dataset (kasistuet-sukup.csv) can be found [here](https://github.com/huttusam/IODS-final/blob/master/data/Fair.csv)  
 
 ##### Script:  
 * The R script used to create the new dataset (*with comments explaining the process*) is  [here](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)
 
 ## 3 Data and Variables
+
+Extramarital Affairs Data  
+
+###Description:  
+* A cross-section
+* Number of observations: 601  
+* Observation: individuals  
+* Country: United States.  
+
+### A dataframe containing:  
+* sex - a factor with levels (male,female)  
+* age - age  
+* ym - number of years married
+* child - children - a factor 
+* religious - how religious, from 1 (anti) to 5 (very)
+* education - education
+* occupation - occupation, from 1 to 7, according to hollingshead classification (reverse numbering)
+* rate - self rating of mariage, from 1 (very unhappy) to 5 (very happy)
+* nbaffairs - number of affairs in past year
+
+###Source
+* Fair, R. (1977) "A note on the computation of the tobit estimator", Econometrica, 45, 1723-1727. [http://fairmodel.econ.yale.edu/rayfair/pdf/1978A200.PDF](http://fairmodel.econ.yale.edu/rayfair/pdf/1978A200.PDF)
+
+```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
+# Access the dplyr library
+library(dplyr)
+
+# Access the gglot2 library
+library(ggplot2)
+
+# access the GGally
+library(GGally)
+
+# access the stringr package
+library(stringr)
+
+# reading data from a CSV file to table 'affairs'
+affairs <- read.csv("data/Fair.csv", header = TRUE)
+
+# printing a summary of affairs
+summary(affairs)
+# n= 601; 315 females, 286 males; mean age: 32.48 years
+```
 
 Description of your data and its variables  
 Where is the data from  
@@ -60,5 +103,3 @@ Presentation of the results of your analysis including visualizations and summar
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-

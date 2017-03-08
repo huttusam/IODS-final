@@ -163,13 +163,13 @@ $(document).ready(function () {
 </div>
 <div id="data-wrangling" class="section level2">
 <h2>2 Data Wrangling</h2>
-<p>I have created a new dataset named ‘kasistuet-sukup’ from the original dataset ‘SES Tukipäätökset 2008-2015.csv’.</p>
+<p>I have created a new dataset named ‘affairs’ from the original dataset ‘Fair.csv’.</p>
 <div id="data-files" class="section level5">
 <h5>Data Files:</h5>
 <ul>
-<li>The original dataset (SES_Tukipaeaetoekset_2008-2015.csv) can be found <a href="http://ses.fi/fileadmin/dokumentit/SES_Tukipaeaetoekset_2008-2015.csv">here</a><br />
+<li>The original dataset (Fair.csv) can be found <a href="https://vincentarelbundock.github.io/Rdatasets/csv/Ecdat/Fair.csv">here</a><br />
 </li>
-<li>The new dataset (analysis_dataset.csv) can be found <a href="https://github.com/huttusam/IODS-final/blob/master/data/kasistuet-sukup.csv">here</a></li>
+<li>The new dataset (kasistuet-sukup.csv) can be found <a href="https://github.com/huttusam/IODS-final/blob/master/data/Fair.csv">here</a></li>
 </ul>
 </div>
 <div id="script" class="section level5">
@@ -181,11 +181,84 @@ $(document).ready(function () {
 </div>
 <div id="data-and-variables" class="section level2">
 <h2>3 Data and Variables</h2>
+<p>Extramarital Affairs Data</p>
+<div id="description" class="section level3">
+<h3>Description:</h3>
+<ul>
+<li>A cross-section</li>
+<li>Number of observations: 601<br />
+</li>
+<li>Observation: individuals<br />
+</li>
+<li>Country: United States.</li>
+</ul>
+</div>
+<div id="a-dataframe-containing" class="section level3">
+<h3>A dataframe containing:</h3>
+<ul>
+<li>sex - a factor with levels (male,female)<br />
+</li>
+<li>age - age<br />
+</li>
+<li>ym - number of years married</li>
+<li>child - children - a factor</li>
+<li>religious - how religious, from 1 (anti) to 5 (very)</li>
+<li>education - education</li>
+<li>occupation - occupation, from 1 to 7, according to hollingshead classification (reverse numbering)</li>
+<li>rate - self rating of mariage, from 1 (very unhappy) to 5 (very happy)</li>
+<li>nbaffairs - number of affairs in past year</li>
+</ul>
+</div>
+<div id="source" class="section level3">
+<h3>Source</h3>
+<ul>
+<li>Fair, R. (1977) “A note on the computation of the tobit estimator”, Econometrica, 45, 1723-1727. <a href="http://fairmodel.econ.yale.edu/rayfair/pdf/1978A200.PDF" class="uri">http://fairmodel.econ.yale.edu/rayfair/pdf/1978A200.PDF</a></li>
+</ul>
+<pre class="r"><code># Access the dplyr library
+library(dplyr)
+
+# Access the gglot2 library
+library(ggplot2)
+
+# access the GGally
+library(GGally)
+
+# access the stringr package
+library(stringr)
+
+# reading data from a CSV file to table 'affairs'
+affairs &lt;- read.csv(&quot;data/Fair.csv&quot;, header = TRUE)
+
+# printing a summary of affairs
+summary(affairs)</code></pre>
+<pre><code>##        X           sex           age              ym         child    
+##  Min.   :  1   female:315   Min.   :17.50   Min.   : 0.125   no :171  
+##  1st Qu.:151   male  :286   1st Qu.:27.00   1st Qu.: 4.000   yes:430  
+##  Median :301                Median :32.00   Median : 7.000            
+##  Mean   :301                Mean   :32.49   Mean   : 8.178            
+##  3rd Qu.:451                3rd Qu.:37.00   3rd Qu.:15.000            
+##  Max.   :601                Max.   :57.00   Max.   :15.000            
+##    religious       education       occupation         rate      
+##  Min.   :1.000   Min.   : 9.00   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:2.000   1st Qu.:14.00   1st Qu.:3.000   1st Qu.:3.000  
+##  Median :3.000   Median :16.00   Median :5.000   Median :4.000  
+##  Mean   :3.116   Mean   :16.17   Mean   :4.195   Mean   :3.932  
+##  3rd Qu.:4.000   3rd Qu.:18.00   3rd Qu.:6.000   3rd Qu.:5.000  
+##  Max.   :5.000   Max.   :20.00   Max.   :7.000   Max.   :5.000  
+##    nbaffairs     
+##  Min.   : 0.000  
+##  1st Qu.: 0.000  
+##  Median : 0.000  
+##  Mean   : 1.456  
+##  3rd Qu.: 0.000  
+##  Max.   :12.000</code></pre>
+<pre class="r"><code># n= 601; 315 females, 286 males; mean age: 32.48 years</code></pre>
 <p>Description of your data and its variables<br />
 Where is the data from<br />
 what does it relate to<br />
 what do the variables represent<br />
 what has been done to the data before analysis</p>
+</div>
 </div>
 <div id="analysis" class="section level2">
 <h2>4 Analysis</h2>
