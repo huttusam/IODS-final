@@ -30,6 +30,9 @@ affairs <- affairs[-1]
 str(affairs)
 #OK. Now: 601 observations, 9 variables. First column excluded.
 
+# Creating logical column 'high_cheat' if number of extra-amarital rraltions is more than 1
+affairs <- mutate(affairs, high_cheat = nbaffairs > 1)
+
 # Save modified data 'affairs' to a file that looks good in a European version of Excel, but also has a decimal point instead of a comma
 write.table(affairs, file = "data/affairs.csv", sep = ";", qmethod="double", col.names=TRUE, row.names=FALSE)
 
@@ -101,7 +104,7 @@ agp3 <- agp2 + geom_smooth(method = "lm")
 agp4 <- agp3 + ggtitle("Religiousness versus Number of Extra-marital Affairs")
 agp4
 
-
+summary(affairs)
 
 # create a regression model with multiple explanatory variables
 my_model2 <- lm(nbaffairs ~ ym + rate + religious + age, data = affairs)
