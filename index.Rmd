@@ -99,6 +99,7 @@ affairs <- read.table("data/affairs.csv", sep = ";", header = TRUE)
 # printing a summary of affairs
 summary(affairs)
 # n= 601; 315 females, 286 males; mean age: 32.48 years
+
 ```
 
 As the above summary indicates, 52% of the respondents in the data are female and 48% male. The mean age of the participants is 53,5 years and 71% of the participants have children. The average duration of marriage among the participants has been about 8 years.  
