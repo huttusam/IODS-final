@@ -44,32 +44,32 @@ The dataset discussed here is a data of 601 answers of individuals to sex-relate
 * religious - how religious from 1 (anti) to 5 (very)
 * education - education:
 
-  + 9.0 - Grade school  
-  + 12.0 - High school
-  + 14.0 - Some college
-  + 16.0 - College graduate
-  + 17.0 - Some graduate school
-  + 18.0 - Master's degree
-  + 20.0 - Ph.D., M.D., or other advanced degree.
+     - 9.0 - Grade school
+     - 12.0 - High school
+     - 14.0 - Some college
+     - 16.0 - College graduate
+     - 17.0 - Some graduate school
+     - 18.0 - Master's degree
+     - 20.0 - Ph.D., M.D., or other advanced degree.
 
 * occupation - occupation, according to Hollingshead Index of Social Positions (ISP) Occupational Scale (with reversed numbering):
 
-  + 7 - Higher executives of large concerns, proprietors, and major professionals  
-  + 6 - Business managers, proprietors of medium-sized businesses, and lesser professionals  
-  + 5 - Administrative personnel, owners of small businesses, and minor professionals
-  + 4 - Clerical and sales workers, technicians, and owners of little businesses
-  + 3 - Skilled manual employees
-  + 2 - Machine operators and semiskilled employees
-  + 1 - Unskilled employees.
+     - 7 - Higher executives of large concerns, proprietors, and major professionals  
+     - 6 - Business managers, proprietors of medium-sized businesses, and lesser professionals  
+     - 5 - Administrative personnel, owners of small businesses, and minor professionals
+     - 4 - Clerical and sales workers, technicians, and owners of little businesses
+     - 3 - Skilled manual employees
+     - 2 - Machine operators and semiskilled employees
+     - 1 - Unskilled employees.
 
 * rate - self rating of marriage from 1 (very unhappy) to 5 (very happy)
-* nbaffairs - number of affairs in the past year
-  + 0 - none
-  + 1 - Once  
-  + 2 - Twice
-  + 3 - 3 times
-  + 7 - 4 to 10 times
-  + 12 - Monthly or more
+* nbaffairs - number of affairs in the past year:
+     - 0 - none
+     - 1 - once  
+     - 2 - twice
+     - 3 - 3 times
+     - 7 - 4 to 10 times
+     - 12 - monthly or more
 
 ### 2.2 Data Wrangling
 
