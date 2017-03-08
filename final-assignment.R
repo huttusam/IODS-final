@@ -13,7 +13,6 @@ setwd("I:/Google Drive/Helsingin yliopisto/Intro to Open Data Science/IODS-final
 # reading data from 'Fair.csv' to table 'affairs'
 affairs <- read.csv("data/Fair.csv", header = TRUE)
 
-
 # looking at dimensions and structure of affairs
 dim(affairs)
 str(affairs)
