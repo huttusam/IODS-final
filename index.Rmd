@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Abstract
 
-This final assignment analyzes the relation between extra-marital affairs (i.e. adultery or "cheating") with some other variables related to personal and marital life in the United States at the end of the 1960's and in the beginning of 1970s. According to my results, the factor correlating most with the likelihood to have an extra-marital affair seems to be (maybe unsurprisingly) one's happiness to his/her marriage.  
+This final assignment analyzes the relation between extra-marital affairs (i.e. adultery or "cheating") with some other variables related to personal and marital life in the United States at the end of the 1960's and in the beginning of 1970s. According to my results, the factor correlating most with the likelihood to have an extra-marital affair seems to be (maybe unsurprisingly) one's happiness in his/her marriage.  
 
 ## 1 Research Question
 
@@ -119,9 +119,11 @@ Who, then, has these relationships?
 p <- ggpairs(affairs, mapping = aes(col = sex, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20))) + ggtitle("All variables against each other") + theme(plot.title = element_text(hjust = 0.5,size=16,face='bold'))
 p
 
+
+
 ```
 
-The above summary shows that women (in red) and men (in blue) don't differ very much in the number of extra-marital relations (see lower right corner of graph). The summary also indicates some interesting correlations with extra-marital affairs. There is a negative correlation between cheating and how people rate their marriage (-0.28), some correlation between cheating and years in marriage (0.187), as well as a slight negative correlation between cheating and religiousness (-0.145). Let's look at these pairs more closely:  
+The above summary shows that women (in red) and men (in blue) don't differ very much in the number of extra-marital relations (see the lower right corner of the graph). The summary also indicates some interesting correlations with extra-marital affairs. There is a negative correlation between cheating and how people rate their marriage (-0.28), some correlation between cheating and years in marriage (0.187), as well as a slight negative correlation between cheating and religiousness (-0.145). Let's look at these pairs more closely:  
 
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
