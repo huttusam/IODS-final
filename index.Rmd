@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Abstract
 
-This final assignment analyzes the relation between extra-marital affairs (i.e. "cheating") with some other variables related to personal and marital life in the United States at the end of the 1970's. According to my results, the factor correlating most with the likelihood to have an extra-marital affair seems to be (maybe unsurprisingly) one's happiness to his/her marriage.  
+This final assignment analyzes the relation between extra-marital affairs (i.e. adultery or "cheating") with some other variables related to personal and marital life in the United States at the end of the 1970's. According to my results, the factor correlating most with the likelihood to have an extra-marital affair seems to be (maybe unsurprisingly) one's happiness to his/her marriage.  
 
 ## 1 Research Question
 
@@ -28,7 +28,7 @@ This assignment uses a dataset originally used in Ray C. Fair's 1977 (Fair 1977)
 
 My hypothesis is that, while other factors may also play a role, not being happy in one's marriage is the strongest factor increasing the likelihood for an extra-marital relationship.
 
-The statistical method applied in this assignment will be linear regression. It will be used to study the correlation between the number of an individual's extra-marital affairs ('nbaffairs', dependant variable) and other variables present in the data (independant variables).
+The statistical method applied in this assignment will be linear regression. It will be used to study the correlation between the number of an individual's extra-marital affairs ('nbaffairs', dependant variable) and other variables present in the data (independent variables).
 
 ## 2 Data
 
@@ -69,7 +69,7 @@ The dataset discussed here is a data of 601 answers of individuals to sex-relate
   + 2 - Twice
   + 3 - 3 times
   + 7 - 4 to 10 times
-  + 12 - Monthly
+  + 12 - Monthly or more
 
 ### 2.2 Data Wrangling
 
@@ -118,7 +118,7 @@ ggpairs(affairs, mapping = aes(col = sex, alpha = 0.3), lower = list(combo = wra
 
 ```
 
-The above summary shows some interesting correlations with extra-marital affairs. There is a negative correlation between cheating and how people rate their marriage, some correlation between cheating and years in marriage, as well as a negative correlation between cheating and religiousness. Let's look at these pairs more closely:  
+The above summary shows that men and women don't differ very much in the number of extra-marital relations. The summary also indicates some interesting correlations with extra-marital affairs. There is a negative correlation between cheating and how people rate their marriage, some correlation between cheating and years in marriage, as well as a slight negative correlation between cheating and religiousness. Let's look at these pairs more closely:  
 
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
