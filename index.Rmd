@@ -16,14 +16,13 @@ output:
 
 ## Abstract
 
-An 'abstract' at the beginning of the page with a summary of your analysis  
+This final assignment analyzes the relation between a tedency to have extra-marital affairs with some other variables related to marital life in the United States at the end of the 1970's. According to my results, the factor correlating most with a likelihood to cheat on one's spouse seems to be (maybe unsurprisingly) one's happiness to his/her marriage.  
 
 ## 1 Research Question
 
 I am using a dataset originally used for Fair's 1977 study of extramarital affairs to see what factors correlated with a tendency to have extramarital affairs in the end of the 1960 in the United States. 
 
-##### Script:  
-* The R script used to create the new dataset (*with comments explaining the process*) is  [here](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)
+The R script used to create the new dataset (*with comments explaining the process*) is  [here](https://github.com/huttusam/IODS-final/blob/master/final-assignment.R)
 
 ## 2 Data and Variables
 
@@ -84,25 +83,25 @@ summary(affairs)
 # n= 601; 315 females, 286 males; mean age: 32.48 years
 ```
 
-As we can see from the summary, about 52% of the respondents were femail and 48% male. The mean age of the participants was 53,5 years and about 71% of them had children. The average duration of marriage among the participants had been about 8 years.  
+As we can see from the summary, about 52% of the respondents are femail and 48% male. The mean age of the participants is 53,5 years and about 71% of them have children. The average duration of marriage among the participants has been about 8 years.  
 
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 # printing a graphical summarization of affairs
-gather(affairs) %>% ggplot(aes(value,fill="#99999",alpha=0.3)) + facet_wrap("key", scales = "free") + geom_bar() + ggtitle("Bars of affairs data") +
+gather(affairs) %>% ggplot(aes(value,fill="#99999",alpha=0.3)) + facet_wrap("key", scales = "free") + geom_bar() + ggtitle("Barsplot of all variables") +
   theme(plot.title = element_text(hjust = 0.5,size=12,face='bold'),legend.position="none")
 ```
 
-When we look at a bar visualization of the data, we can see that most participants have had at least some years of college education, have had no extra-marital relationships, are in managerial or administrative positions, are happy with their marriage, and are somewhat religious.  
+When we look at a bar visualization of the data, we can see that most participants have had at least some years of college education, have had no extra-marital relationships, are in administrative or managerial positions, are happy with their marriage, and are somewhat religious.  
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 ggpairs(affairs, mapping = aes(col = sex, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20))) +
-  ggtitle("affairs-data against each other") +
+  ggtitle("All variables against each other") +
   theme(plot.title = element_text(hjust = 0.5,size=12,face='bold'))
 
 ```
 
-When we cross-tabulate the variables, we can see a negative correlation between the number of extra-marital realtions and how people rate their marriage. There's also some correlation between extra-marital affairs and years of marriage and negative correaltion with religiousness. Next, let's so a regression analysis on these pairs.  
+When we cross-tabulate the variables, we can see a negative correlation between the number of extra-marital affairs and how people rate their marriage. There's also some correlation between extra-marital affairs and years of marriage and negative correlation with religiousness. Next, we look at the relation of these correlating pairs more closely.
 
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
