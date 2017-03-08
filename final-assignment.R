@@ -11,21 +11,31 @@ library(tidyr)
 #Set working directory
 setwd("I:/Google Drive/Helsingin yliopisto/Intro to Open Data Science/IODS-final")
 
-# reading data from a CSV file to table 'affairs'
-affairs <- read.csv("data/Fair.csv", header = TRUE)
-
 ###############################
 # WRANGLING dataset 'affairs' #
 ###############################
 
-# looking at structure, dimensions, and summary of affairs
+# reading data from 'Fair.csv' to table 'affairs'
+affairs <- read.csv("data/Fair.csv", header = TRUE)
+
+# looking at dimensions and structure of affairs
 dim(affairs)
 str(affairs)
-#601 observations, 10 variables
+#601 observations, 10 variables, first variable/column has index numbers
 
-#The dataset has index numbers in the first column, excluding first column
-keep_columns <- c("sex", "age", "ym", "child", "religious", "occupation", "rate", "nbaffairs")
-affairs <- select(affairs, one_of(keep_columns))
+#Excluding first column
+affairs <- affairs[-1]
+
+# looking at structure of affairs
+str(affairs)
+#OK. Now: 601 observations, 9 variables. First column excluded.
+
+# Save modified data 'affairs' to a file that looks good in a European version of Excel, but also has a decimal point instead of a comma
+write.table(affairs, file = "data/affairs.csv", sep = ";", qmethod="double", col.names=TRUE, row.names=FALSE)
+
+###############################
+# ANALYSING dataset 'affairs' #
+###############################
 
 # Printing summary of 'affairs'
 summary(affairs)
@@ -79,8 +89,23 @@ rlp3 <- rlp2 + geom_smooth(method = "lm")
 rlp4 <- rlp3 + ggtitle("Religiousness versus Number of Extra-marital Affairs")
 rlp4
 
+# Plotting nbaffairs vs age
+agp1 <- ggplot(affairs, aes(x = age, y = nbaffairs, col = sex))
+# define the visualization type (points)
+agp2 <- agp1 + geom_point()
+# draw the plot
+agp2
+# add a regression line
+agp3 <- agp2 + geom_smooth(method = "lm")
+# add a main title and draw the plot
+agp4 <- agp3 + ggtitle("Religiousness versus Number of Extra-marital Affairs")
+agp4
 
-###############################
-# ANALYSING dataset 'affairs' #
-###############################
 
+
+# create a regression model with multiple explanatory variables
+my_model2 <- lm(nbaffairs ~ ym + rate + religious + age, data = affairs)
+
+# draw diagnostic plots using the plot() function. Choose the plots 1, 2 and 5
+par(mfrow = c(2,2))
+plot(my_model2, which = c(1:2, 5))

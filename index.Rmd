@@ -71,24 +71,25 @@ and the original dataset can be found at   [https://vincentarelbundock.github.io
 ##### Summary of the Data
 
 ```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
-# Access the dplyr library
+# Access libraries
 library(dplyr)
-
-# Access the gglot2 library
 library(ggplot2)
-
-# access the GGally
 library(GGally)
-
-# access the stringr package
 library(stringr)
+library(tidyverse)
 
-# reading data from a CSV file to table 'affairs'
-affairs <- read.csv("data/Fair.csv", header = TRUE)
+# reading data from the wrangles CSV file to table 'affairs'
+affairs <- read.table("data/affairs.csv", sep = ";", header = TRUE)
 
 # printing a summary of affairs
 summary(affairs)
 # n= 601; 315 females, 286 males; mean age: 32.48 years
+```
+Let's look at a graphical summarization of the data:  
+```{r echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
+# printing a graphical summarization of affairs
+gather(affairs) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar()
+
 ```
 
 ## 4 Analysis
